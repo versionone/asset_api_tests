@@ -1,0 +1,1 @@
+cp -r output/bulk /c/projects/api-docs/src/markdown-pages/
