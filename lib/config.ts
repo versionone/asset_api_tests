@@ -1,10 +1,17 @@
+let haveReportedDefault = false;
+
 export default {
 	lifecycle: {
 		get url() {
 			let lifecycleUrl = process.env['LIFECYCLE_URL'];
+			const lifecycleUrlDefault = "http://localhost/VersionOne.Web";
 
 			if (!lifecycleUrl || lifecycleUrl === '') {
-				throw new Error('LIFECYCLE_URL not defined');
+				if (!haveReportedDefault) {
+					console.log(`LIFECYCLE_URL env variable not found, defaulting to ${lifecycleUrlDefault}`);
+					haveReportedDefault = true;
+				}
+				lifecycleUrl = lifecycleUrlDefault;
 			}
 
 			return lifecycleUrl.replace(/\/$/, '');
@@ -27,14 +34,6 @@ export default {
 			let urlParts = this.url.match(/\/\/(.+)\/(.*)/);
 			return urlParts[2];
 		}
-	},
-
-	get headless() {
-		return process.env['HEADLESS'] || false;
-	},
-
-	get browserName() {
-		return process.env['BROWSER_NAME'] || 'chrome';
 	},
 
 	get concurrentTests() {

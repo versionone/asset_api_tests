@@ -9,7 +9,6 @@ import config from './config';
 
 chai.use(chaiAsPromised);
 chai.use(chaiDatetime);
-//chai.should();
 
 const test = anyTest as TestInterface<{apiThroatResolve: Function }>;
 const baseUrl = config.lifecycle.url;
