@@ -20,7 +20,7 @@ npm test
 If you have a different URL against which you'd like to run the tests, then type:
 
 ```
-LIFECYCLE_URL=http://host/instance npm test
+V1_URL=http://host/instance npm test
 ```
 
 To run just a single test, but at the default location, type:
@@ -32,5 +32,5 @@ npm test -- tests/test_file_name.js
 Finally, if you want to run a single test at a custom location, type:
 
 ```
-LIFECYCLE_URL=http://host/instance npm test -- tests/test_file_name.js
+V1_URL=http://host/instance npm test -- tests/test_file_name.js
 ```

@@ -1,28 +1,28 @@
 let haveReportedDefault = false;
 
 export default {
-	lifecycle: {
+	v1: {
 		get url() {
-			let lifecycleUrl = process.env['LIFECYCLE_URL'];
-			const lifecycleUrlDefault = "http://localhost/VersionOne.Web";
+			let v1Url = process.env['V1_URL'];
+			const v1UrlDefault = "http://localhost/VersionOne.Web";
 
-			if (!lifecycleUrl || lifecycleUrl === '') {
+			if (!v1Url || v1Url === '') {
 				if (!haveReportedDefault) {
-					console.log(`LIFECYCLE_URL env variable not found, defaulting to ${lifecycleUrlDefault}`);
+					console.log(`V1_URL env variable not found, defaulting to ${v1UrlDefault}`);
 					haveReportedDefault = true;
 				}
-				lifecycleUrl = lifecycleUrlDefault;
+				v1Url = v1UrlDefault;
 			}
 
-			return lifecycleUrl.replace(/\/$/, '');
+			return v1Url.replace(/\/$/, '');
 		},
 
 		get username() {
-			return process.env['LIFECYCLE_USERNAME'] || 'admin';
+			return process.env['V1_USERNAME'] || 'admin';
 		},
 
 		get password() {
-			return process.env['LIFECYCLE_PASSWORD'] || 'admin';
+			return process.env['V1_PASSWORD'] || 'admin';
 		},
 
 		get server() {

@@ -3,7 +3,7 @@ import Axios from 'axios';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as chaiDatetime from 'chai-datetime';
 import anyTest, {TestInterface} from 'ava';
-import LifecycleApi from './lifecycle_api';
+import V1Api from './v1_api';
 import * as btoa from 'btoa';
 import config from './config';
 
@@ -11,18 +11,18 @@ chai.use(chaiAsPromised);
 chai.use(chaiDatetime);
 
 const test = anyTest as TestInterface<{apiThroatResolve: Function }>;
-const baseUrl = config.lifecycle.url;
+const baseUrl = config.v1.url;
 const concurrentTests = process.env['CONCURRENT_TESTS'] ? parseInt(process.env['CONCURRENT_TESTS']) : 1;
 
-const lifecycleApi = new LifecycleApi(config.lifecycle);
-const api = lifecycleApi;
+const v1Api = new V1Api(config.v1);
+const api = v1Api;
 
 
 let axios = Axios.create({
-	baseURL: config.lifecycle.url,
+	baseURL: config.v1.url,
 	timeout: 30000,
 	headers: {
-		'Authorization': 'Basic ' + btoa(config.lifecycle.username + ':' + config.lifecycle.password)
+		'Authorization': 'Basic ' + btoa(config.v1.username + ':' + config.v1.password)
 	}
 });
 
@@ -44,5 +44,5 @@ test.afterEach.always(t => {
 	return t.context.apiThroatResolve();
 });
 
-export {test, config, api, lifecycleApi, baseUrl, axios};
+export {test, config, api, v1Api, baseUrl, axios};
 

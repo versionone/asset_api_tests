@@ -8,11 +8,11 @@ const avaExe = process.platform === 'win32' ? path.resolve('node_modules/.bin/av
 const concurrency: string = (process.env['CONCURRENCY'] ? parseInt(process.env['CONCURRENCY']) : 1).toString();
 let avaProcess;
 
-let testPath = process.argv[2] || "tests";
+let testPath = process.argv[2] || "tests/";
 let testName = process.argv[3] || "*";
 let flow: any = Promise.resolve();
 
-console.log(`Running these tests: ${testPath}/${testName}`);
+console.log(`Running these tests: ${testPath}${testName}`);
 
 flow = flow.then(() => {
 	return new Promise(resolve => {
