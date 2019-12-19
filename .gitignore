@@ -5,20 +5,6 @@ node_modules
 
 #node
 npm-debug.log
-lifecycle/feature_tests/budgets/target/
-lifecycle/feature_tests/budgets/LogFiles/QA/*.xml
-lifecycle/feature_tests/budgets/LogFiles/QA/*.lck
-lifecycle/sanity_tests/screenshots/
-lifecycle/sanity_tests/*.xml
-
-screenshots
-testresults.xml
 *.map
-
-continuum/**/*.js
-lifecycle/regression/**/*.js
-lifecycle/tools/**/*.js
+tests/**/*.js
 lib/**/*.js
-lifecycle/smoke_tests/*.js
-lifecycle/sanity_tests/**/*.js
-lifecycle/states/**/*.js
