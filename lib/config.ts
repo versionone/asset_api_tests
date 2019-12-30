@@ -1,5 +1,3 @@
-let haveReportedDefault = false;
-
 export default {
 	v1: {
 		get url() {
@@ -7,10 +5,6 @@ export default {
 			const v1UrlDefault = "http://localhost/VersionOne.Web";
 
 			if (!v1Url || v1Url === '') {
-				if (!haveReportedDefault) {
-					console.log(`V1_URL env variable not found, defaulting to ${v1UrlDefault}`);
-					haveReportedDefault = true;
-				}
 				v1Url = v1UrlDefault;
 			}
 

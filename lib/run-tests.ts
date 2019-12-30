@@ -26,12 +26,13 @@ flow = flow.then(() => {
 			resolve();
 		});
 	});
-});
+})
+.then(() => process.exit());;
 
 if (process.platform === 'win32') {
 	getPpid(process.pid).then(ppid => {
 		watch(ppid, pid => {
-			kill(process.pid);
+			kill(pid);
 		});
 	});
 }
