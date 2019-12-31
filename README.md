@@ -1,5 +1,10 @@
 # VersionOne api/asset Tests
-Contains scripts, code for automated tests against the VersionOne api/asset endpoint (Bulk API)
+Contains documentation, examples, and automated tests for the VersionOne api/asset endpoint (Bulk API)
+
+## Requirements
+
+* [VersionOne Enterprise](https://community.versionone.com/Release-Notes-and-Downloads) >= 19.2
+* Node.js
 
 ## Setup
 
