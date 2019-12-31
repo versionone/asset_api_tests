@@ -13,6 +13,9 @@ First, type:
 ```
 npm install
 ```
+## Documentation
+
+See [docs](docs) for a comprehensive guide on how to use the API.
 
 ## Running tests
 
