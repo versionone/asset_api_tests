@@ -1679,9 +1679,9 @@ This produces a projection result like this:
 ```
 In the above case, given that `Task:1490` does not have `Member:20` assigned, the result will be that only `Task:1489` now has `Member:1575` in its Owners attribute while the other one remains ownerless.
 
-## Deferring update projections until the processing phase
+## Deferring execute operation projections until the processing phase
 
-If you'd like to have the system wait until the actually processing phase to project the target assets to update, you can do this by wrapping your update command inside of a user-alias. This is helpful when, for example you need to create a new asset and also invoke an operation on it within a single request. Note that you could also invoke an update upon it, though that might be less useful than invoking an operation. We will see more about this in practice in subsequent sections, but here's a realistic example:
+If you'd like to have the system wait until the actually processing phase to project the target assets to update, you can do this by wrapping your execute operation command inside of a user-alias. This is helpful when, for example you need to create a new asset and also invoke an operation on it within a single request. Note that you could also invoke an update upon it using an alias to create a deferral, though that might be less useful than invoking an operation.
 
 Given we want to create a new Story that has a couple of Tests, one of which is already completed from the user's perspective, then we can issue a request like this:
 
@@ -1819,13 +1819,119 @@ And a processing phase response like this:
 * Notice how the Story asset, since it is user aliased, does not immediately result in a flattened projection phase result. That is because we are forcing the system to defer the projection until as late as possible. Thus, although we only supplied one nested user-alias, to identify `@tests1` for later reference, the second one remains within the hierarchy because the containing Story asset is itself user-aliased.
 * The only auto-aliased part of the projection result is the query. The actual processing phase response would look no different if we had supplied our own alias for the query, but that is not necessary.
 
-## Operation invocation command projections
+## Deferring update command projections
 
-TODO (similar to above)
+While it's not as realistic of a scenario to need to do this, it's still possible using a user-alias in exactly the same way as shown above. To see an example of this, [check out this automated test](../tests/update_deferrals_can_reference_user_aliases.ts).
 
 ## Query projections
 
-TODO (very little to say here, it's all deferred)
+When you supply a query in a request, the query will always take place after all previous commands and thus will not require deferral. You can see why a user-supplied alias provides no advantage over an auto-aliased query by looking at the `?previewOnly=true` result of the following request which contains the same query twice, one unaliased, one with a user-alias:
+
+```json
+[
+  {
+    "@story": {
+      "AssetType": "Story",
+      "Scope": "Scope:0",
+      "Name": "My Story"
+    }
+  },
+  {
+    "from": "@story",
+    "select": [
+      "Name",
+      "Number"
+    ]
+  },
+  {
+    "@query": {
+      "from": "@story",
+      "select": [
+        "Name",
+        "Number"
+      ]
+    }
+  }
+]
+```
+
+This produces a projection phase result like this:
+
+```json
+[
+  {
+    "@story": {
+      "AssetType": "Story",
+      "Scope": "Scope:0",
+      "Name": "My Story"
+    }
+  },
+  {
+    "@acca160a-05b0-46f5-9035-4b6b26ddde7e": {
+      "from": "@story",
+      "select": [
+        "Name",
+        "Number"
+      ]
+    }
+  },
+  {
+    "@query": {
+      "from": "@story",
+      "select": [
+        "Name",
+        "Number"
+      ]
+    }
+  }
+]
+```
+
+And a processing phase response like this:
+
+```json
+{
+  "assetsCreated": {
+    "oidTokens": [
+      "Story:2842"
+    ],
+    "count": 1
+  },
+  "assetsModified": {
+    "oidTokens": [],
+    "count": 0
+  },
+  "assetsOperatedOn": {
+    "oidTokens": [],
+    "count": 0
+  },
+  "commandFailures": {
+    "commands": [],
+    "count": 0
+  },
+  "queryResult": {
+    "results": [
+      [
+        {
+          "_oid": "Story:2842",
+          "Name": "My Story",
+          "Number": "S-01663"
+        }
+      ],
+      [
+        {
+          "_oid": "Story:2842",
+          "Name": "My Story",
+          "Number": "S-01663"
+        }
+      ]
+    ],
+    "count": 2
+  }
+}
+```
+
+Therefore, remember that you don't need to be overzealous about wrapping queries within user-aliases.
 
 # Complex aliases
 
