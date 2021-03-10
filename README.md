@@ -1,4 +1,4 @@
-# VersionOne api/asset Tests
+# VersionOne api/asset Tests (Tombstoned)
 Contains documentation, examples, and automated tests for the VersionOne api/asset endpoint (Bulk API)
 
 ## Requirements
